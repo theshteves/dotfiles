@@ -1,4 +1,4 @@
-; Matthew Kneiser's .emacs
+; Steven Kneiser's .emacs
 ;
 ; Date Compiled: 11/06/2014
 ; Date Modified: 01/11/2015
@@ -93,14 +93,14 @@
 (global-set-key (kbd "C-c C-a") 'copy-all)
 
 ; Load Emacs Libraries
-(add-to-list 'load-path "~/.emacs.d")
-(add-to-list 'load-path "~/.emacs.d/themes")
+;; (add-to-list 'load-path "~/.emacs.d")
+;; (add-to-list 'load-path "~/.emacs.d/themes")
 
 ; Autocomplete
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+;; require 'auto-complete-config)
+;; add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 ; there used to be an extra slash between .d//ac-dict
-(ac-config-default)
+;; (ac-config-default)
 
 (setq vc-handled-backends ())
 (setq inhibit-startup-echo-area-message t) ; USERNAME instead of t, must hardcode
@@ -110,12 +110,36 @@
 ;  in the buffer
 (setq initial-scratch-message nil)
 
+
 ; Python major mode
 ;  (for .py files)
 (setq auto-mode-alist (cons '("\\.py$" . python-mode) auto-mode-alist))
 (setq interpreter-mode-alist (cons '("python" . python-mode)
 				   interpreter-mode-alist))
 (autoload 'python-mode "python-mode" "Python editing mode." t)
+
+; Markdown major mode
+;  (for .md files)
+(setq auto-mode-alist (cons '("\\.md$" . markdown-mode) auto-mode-alist))
+(setq interpreter-mode-alist (cons '("markdown" . markdown-mode)
+				   interpreter-mode-alist))
+(autoload 'markdown-mode "markdown-mode" "Markdown editing mode." t)
+
+; Protocol Buffer major mode
+;  (for .proto files)
+(setq auto-mode-alist (cons '("\\.proto$" . protobuf-mode) auto-mode-alist))
+(setq interpreter-mode-alist (cons '("protobuf" . protobuf-mode)
+				   interpreter-mode-alist))
+(autoload 'protobuf-mode "protobuf-mode" "Protocol Buffer editing mode." t)
+
+;; Tell emacs where is your personal elisp lib dir
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
+
+;; Jade major mode
+;; (for .jade files)
+;; (load "jade-mode") ;; best not to include the ending “.el” or “.elc”
+;; (add-to-list 'auto-mode-alist '("\\.js\\'" . jade-mode))
 
 ; Remaps Ctrl-h to backspace so Emacs respects Unix tradition
 ;(global-set-key [(control h)] 'delete-backward-char)
