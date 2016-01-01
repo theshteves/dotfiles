@@ -16,5 +16,6 @@ WELCOME_MSG
 
 export PATH=$PATH:/usr/local/bin
 export EDITOR="vim"
+export PS1="\[\033[0;32m\][\D{%m/%d/%y %r}] \u:\W$\[\033[0m\] "
 
 source ~/.bashrc
