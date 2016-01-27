@@ -26,3 +26,5 @@
 ;; Tell emacs where is your personal elisp lib dir
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
+; ORG MODE BABY
+

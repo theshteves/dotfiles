@@ -9,11 +9,11 @@ Say hello to my workspace.
 
 `git clone https://github.com/theshteves/dotfiles.git`
 
-### Copy desired into your home directory
+### Link (symbolically) desired files to home directory
 
 `cd ./dotfiles/`
 
-`cp [desired config files] ~/`
+`ln -s [desired config files] ~/`
 
 ## Inspiration
 
