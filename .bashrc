@@ -1,5 +1,6 @@
 alias a="alias"
 alias m="man"
+alias v="vim"
 alias s="ls -FG"
 alias sa="ls -aFG" 
 alias sd="cd" # sue me
@@ -39,6 +40,13 @@ function z {
 # because I'm a thoughtful guy
 function n {
 	echo ${*} >> ~/.notes
+}
+
+function ask {
+	#local RES=python ~/bash-bot.py ${1} 
+	#echo $RES
+	#echo $RES | say -v Vicki 
+	python ~/bash-bot.py ${1} | say -v Vicki
 }
 
 function treecp {
