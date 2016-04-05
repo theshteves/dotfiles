@@ -14,9 +14,10 @@ cat <<WELCOME_MSG
    |_|  |_|   |_|_______|______/|_|   |_|  |_|  |_______) \___/ |_______|______/
 WELCOME_MSG
 
-export PATH=$PATH:/usr/local/bin
-export EDITOR="vim"
+export PATH=$PATH:/usr/local/bin:/Library/Python/2.7/site-packages
 export PS1="\`if [ \$? = 0 ]; then echo \[\e[33m\]^_^\[\e[0m\]; else echo \[\e[31m\]O_O\[\e[0m\]; fi\` \[\033[0;32m\]\u \[\033[0m\]\w\[\033[m\]\[\033[0;32m\]\$ \[\033[0m\]"
+export EDITOR="vim"
+alias vim="/usr/local/Cellar/vim/7.4.1655/bin/vim"
 
 # Less file-viewer customizations
 export LESS_TERMCAP_mb=$'\E[01;31m'      # begin blinking
@@ -29,4 +30,9 @@ export LESS_TERMCAP_us=$'\E[01;32m'      # begin underline
 
 # Bash aliases & functions
 source ~/.bashrc
+
+export LANGUAGE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export LC_CTYPE="en_US.UTF-8"
 
