@@ -1,1 +1,32 @@
--iR
+##################################################
+#
+# 	Steven Kneiser's .lessrc
+#
+#		Created on 4/6/2016
+#
+##################################################
+
+# Print line numbers
+--LINE-NUMBERS
+
+# Prompt even more verbosely than "more"
+--LONG-PROMPT
+
+# Screen repaints from the top line down
+--CLEAR-SCREEN
+
+# Consecutive blank lines squeezed into one
+--squeeze-blank-lines
+
+# Smart ignore-case on search (case-sensitive if caps in search)
+--ignore-case
+
+# Only highlight current string found in search (performace boost for larger files)
+--hilite-search
+
+# Less configurations
+--RAW-CONTROL-CHARS
+
+# Remove system bell
+--SILENT
+
