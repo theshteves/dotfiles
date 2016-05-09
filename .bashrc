@@ -1,5 +1,7 @@
 alias a="alias"
 alias m="man"
+alias n="clear && ls -FG && echo && git status -s --untracked-files=normal"
+alias na="clear && ls -aFG && echo && git status -s --untracked-files=normal"
 alias v="vim"
 alias s="ls -FG"
 alias sa="ls -aFG" 
@@ -19,10 +21,12 @@ alias tl="tmux ls"
 alias tn="tmux new-session -s"
 
 # Git... you're the best
-alias gs="git status"
+alias ga="git add"
 alias gc="git commit -m"
-alias gl="git log --graph --pretty=oneline --abbrev-commit"
+alias gd="git diff"
+alias gl="git log --graph --pretty=oneline --abbrev-commit --decorate"
 alias gp="git push"
+alias gs="git status"
 
 # Quick-edit for dotfiles
 alias ebp="$EDITOR ~/.bash_profile"
@@ -38,7 +42,7 @@ function z {
 }
 
 # because I'm a thoughtful guy
-function n {
+function no {
 	echo ${*} >> ~/.notes
 }
 
@@ -48,15 +52,6 @@ function ask {
 	#echo $RES | say -v Vicki 
 	python ~/bash-bot.py ${1} | say -v Vicki
 }
-
-function treecp {
-	if ["${#}" != 2]; then
- 		echo "Usage: treecp SOURCE DESTINATION"	
- 		return 1
- 	else
- 		tar cf - "${1}" | (cd "${2}"; tar xpf -)
- 	fi
- }
  
 function translate {
  	TRANSLATED=`curl "http://dictionary.reference.com/browse/${1}" | grep -i -m 1 -w "${2}:" | sed 's/^[ \t]*//;s/[ \t]*$//'`
