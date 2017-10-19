@@ -1,0 +1,9 @@
+[core]
+	autocrlf = input
+	editor = vim
+[user]
+	name = theshteves
+	email = stevenkneiser@gmail.com
+	editor = vim
+[push]
+    default = tracking
