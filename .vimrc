@@ -1,4 +1,5 @@
 """""""""""""""""""""""""""""""""""""""""""""""{{{
+"
 " Steven Kneiser's dope .vimrc
 " 
 " Inspired by:
@@ -16,7 +17,6 @@
 "	Now you can press "za" within any Section to shrink/expand multiple lines
 "
 " Sections:
-"	-> Vundle Plugins
 "   -> General
 "   -> User Interface
 "   -> Colors & Fonts
@@ -26,82 +26,7 @@
 "   -> Mapping Edits
 "   -> Files & Backups
 "   -> Macros
-" 
 "
-"""""""""""""""""""""""""""""""""""""""""""""""}}}
-"
-" VUNDLE PLUGINS (Package Manager)
-"
-"""""""""""""""""""""""""""""""""""""""""""""""{{{
-set nocompatible 
-filetype off
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" let Vundle manage Vundle, required
-" Plugin 'gmarik/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'vim-airline/vim-airline'
-Plugin 'tpope/vim-fugitive'
-Plugin 'edkolev/tmuxline.vim'
-Plugin 'vim-airline/vim-airline-themes'
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-
-"
-" NERDTree
-"
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-map <C-n> :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-
-"
-" vim-airline
-"
-set term=xterm-256color
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '»'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '«'
-" let g:airline_symbols.crypt = '🔒'
-" let g:airline_symbols.linenr = '␊'
-" let g:airline_symbols.linenr = '␤'
-" let g:airline_symbols.linenr = '¶'
-" let g:airline_symbols.branch = '⎇'
-" let g:airline_symbols.paste = 'ρ'
-" let g:airline_symbols.paste = 'Þ'
-" let g:airline_symbols.paste = '∥'
-" let g:airline_symbols.spell = 'Ꞩ'
-" let g:airline_symbols.notexists = '∄'
-" let g:airline_symbols.whitespace = 'Ξ'
-
-"
-" tmuxline
-"
-let g:tmuxline_powerline_separators = 0
-let g:tmuxline_separators = {
-			\ 'left' : '»',
-			\ 'left_alt' : '»',
-			\ 'right' : '«',
-			\ 'right_alt' : '«',
-			\ 'space' : ' '}
-
-
 """""""""""""""""""""""""""""""""""""""""""""""}}}
 "
 " GENERAL
@@ -201,7 +126,9 @@ set encoding=utf8
 "
 """""""""""""""""""""""""""""""""""""""""""""""{{{
 " 1 tab == 4 spaces
+set expandtab
 set shiftwidth=4
+set softtabstop=4
 set tabstop=4
 
 set ai "Auto indent
@@ -285,7 +212,7 @@ autocmd BufNewFile,BufRead *.json set ft=javascript
 "
 """""""""""""""""""""""""""""""""""""""""""""""{{{
 "h - turns word into html tags
-let @h="yiWi<pa></Ea>Bf<"
+let @h="yiWi<pa></Ea>Bf<"
 
 "c - compute arithmetic and paste after equals sign
 let @c="yt=f=a=0"
