@@ -48,6 +48,9 @@ command WQ wq !sudo tee % > /dev/null
 " Brutally murder 'Ex mode' 
 noremap Q <nop>
 
+" Ctags for cross-language definition finding
+set tags=tags;
+
 
 """""""""""""""""""""""""""""""""""""""""""""""}}}
 "
@@ -72,7 +75,7 @@ set ruler
 set number
 
 " Center line numbers on the cursor
-set relativenumber
+"set relativenumber
 
 " Make backspace work like it should
 set backspace=indent,eol,start
@@ -212,7 +215,10 @@ autocmd BufNewFile,BufRead *.json set ft=javascript
 "
 """""""""""""""""""""""""""""""""""""""""""""""{{{
 "h - turns word into html tags
-let @h="yiWi<pa></Ea>Bf<"
+let @h="yiWi<pa></Ea>Bf<i"
+
+"t - Add markdown above [TODO]: # ()
+let @t="o[TODO]: # ()i"
 
 "c - compute arithmetic and paste after equals sign
 let @c="yt=f=a=0"

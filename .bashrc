@@ -33,6 +33,7 @@ if [ -z "$PS1" ]; then
 fi
 
 alias a="alias"
+alias uplay="/Users/kneiser/Library/Application\ Support/Steam/steamapps/common/Assassins\ Creed\ Brotherhood/Assassin\'s\ Creed\ Brotherhood.app/Contents/MacOS/acbmp_sf"
 alias b="tput bell"
 #function c { cd $(printf "%0.s../" {1..${1}}; )} # cd "../" * arg1
 alias d="vimdiff"
@@ -40,7 +41,7 @@ alias e="emacs -nw"
 alias f="find . -name"
 alias ff="find . -type f -name"
 alias fd="find . -type d -name"
-alias l="less"
+alias l="less --LINE-NUMBERS --LONG-PROMPT --CLEAR-SCREEN --squeeze-blank-lines --ignore-case --hilite-search --RAW-CONTROL-CHARS --SILENT --HILITE-UNREAD"
 alias m="man"
 alias v="vim"
 #alias y=""
@@ -63,7 +64,9 @@ alias sa="ls -aFG"
 alias sd="cd" # sue me
 alias se="printenv"
 function sg { grep -rni --color=always "${1}" . | less; }
+alias sj="jupyter notebook"
 function sloc { find . -name "${1}" | xargs wc -l | sort; }
+alias sm="mail -v"
 alias sp="ps aux"
 alias sr="ls -aFGR | less"
 alias sz="jobs"
@@ -74,9 +77,12 @@ alias sz="jobs"
 # NAVIGATION
 #
 ###############################################{{{
+alias ff="find . -type f -name"
+alias fd="find . -type d -name"
 alias n="clear && ls -FG && echo && git status -s --untracked-files=normal"
-alias na="clear && ls -aFG && echo && git status -s --untracked-files=normal"
+alias na="clear && ls -aFG && echo && git status -s --untracked-files=normal --long --verbose"
 function no { echo ${*} >> ~/.notes; } # because I'm a thoughtful guy
+alias on="open -n"
 
 # Search history for next alias
 alias new="history | awk '{print $2}' | sort | uniq -c | sort"
@@ -116,13 +122,15 @@ alias tn="tmux new-session -s"
 alias g="git"
 alias ga="git add"
 alias gb="git branch"
+alias gba="git branch -a"
 alias gc="git commit -m"
 alias gd="git diff"
 alias gf="git fetch"
+alias gfa="git fetch -a"
 alias gg="git grep"
-alias gl="git log --graph --pretty=oneline --abbrev-commit --decorate"
+alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue%an %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 alias gp="git push"
-alias gpl="git pull"
+alias gpr="git pull --rebase"
 alias gs="git status"
 
 # Perforce... you're the worst
@@ -139,14 +147,15 @@ alias 山="say yama"
 alias advice="fortune -s | say"
 alias play="mpg123 ~/.soundcloud2000/*.mp3"
 alias plz='sudo $(history -p !!)'
+alias packet-loss="ping -A 1.1.1.1"
 function gx { g++ -g -std=c++11 $@ && ./a.out; }
 
 # Package Management made simple
-function brewall {
+function brewup {
 	brew update
 	brew upgrade
-	brew prune
-	brew cleanup
+	brew cleanup --prune-prefix #brew prune
+	#brew cleanup
 	brew doctor
 }
 

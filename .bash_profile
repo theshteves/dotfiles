@@ -20,6 +20,7 @@ export LC_CTYPE="en_US.UTF-8"
 
 # General customizations
 export EDITOR="vim"
+export PATH="/usr/local/sbin:$PATH:/usr/local/lib/ruby/gems/2.6.0/bin"
 
 
 # Less file-viewer customizations
