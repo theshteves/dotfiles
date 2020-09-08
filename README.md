@@ -5,15 +5,9 @@ Say hello to my workspace.
 
 ## Getting Started
 
-### Install this repo
-
 `git clone https://github.com/theshteves/dotfiles.git`
 
-### Link (symbolically) desired files to home directory
-
-`cd ./dotfiles/`
-
-`ln -s [desired config files] ~/`
+`make`
 
 ## Inspiration
 
