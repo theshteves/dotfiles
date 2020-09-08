@@ -19,8 +19,8 @@ export LC_CTYPE="en_US.UTF-8"
 
 
 # General customizations
+export BASH_SILENCE_DEPRECATION_WARNING=1 # Apple can't make me use zsh >:]
 export EDITOR="vim"
-export PATH="/usr/local/sbin:$PATH:/usr/local/lib/ruby/gems/2.6.0/bin"
 
 
 # Less file-viewer customizations
@@ -46,7 +46,9 @@ else
   export PS1="\`if [ \$? = 0 ]; then echo \[\e[33m\]^_^\[\e[0m\]; else echo \[\e[31m\]O_O\[\e[0m\]; fi\` \[\033[0;32m\]\u \[\033[0m\]\w\[\033[m\]\[\033[0;32m\]\$ \[\033[0m\]"
 fi
 
-source ~/.git-completion
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+fi
 
 
 # My personal shortcuts
