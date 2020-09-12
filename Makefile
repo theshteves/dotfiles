@@ -11,9 +11,5 @@ all: brew
 	cp $(PWD)/fonts/lucida-console.ttf ~/Library/Fonts/ # TODO: Update terminal preferences (bash, font, text color: #46DEEB)
 
 brew:
-ifeq ($(command -v brew), "")
-	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-else
-	brew update
-endif
+	if [ $(command -v brew) == "" ] ; then curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | /bin/bash; else brew update; fi
 	brew bundle --file $(PWD)/Brewfile
