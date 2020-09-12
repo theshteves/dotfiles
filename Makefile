@@ -7,7 +7,7 @@ all: brew
 	ln -fs $(PWD)/.vimrc ~/
 	ln -fs $(PWD)/.emacs ~/
 	ln -fs $(PWD)/.gitconfig ~/
-	ln -fs $(PWD)/fonts ~/ # Open up MacOS "Font Book" to add font
+	cp $(PWD)/fonts/lucida-console.ttf ~/Library/Fonts/ # TODO: Update terminal preferences (bash, font, text color: #46DEEB)
 
 brew:
 ifeq ($(command -v brew), "")
