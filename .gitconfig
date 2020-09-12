@@ -1,9 +1,12 @@
 [core]
 	autocrlf = input
 	editor = vim
+	excludesfile = ~/.gitignore_global
 [user]
 	name = theshteves
 	email = stevenkneiser@gmail.com
 	editor = vim
 [push]
-    default = tracking
+	default = tracking
+[github]
+	user = theshteves
