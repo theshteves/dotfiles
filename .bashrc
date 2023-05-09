@@ -6,12 +6,17 @@
 #   https://raw.githubusercontent.com/theshteves/dotfiles/master/.bashrc
 #
 # Navigating this .bashrc w/folds:
-#   I provided manual fold markers so you can shrink and expand this file at 
-#   your pleasure so first enable folding in you current buffer:
-#   
+#   I already inserted manual fold markers within this file
+#   so you can quickly shrink & expand this file.
+#
+#   Enable folding in your current buffer:
 #   	:set foldmethod=marker
 #
-#	Now you can press "za" within any Section to shrink/expand multiple lines
+#	  Now you can press:
+#     * za -> Toggles open or closed IF cursor is within a fold
+#     * zR -> Open  ALL folds
+#     * zM => Close ALL folds
+#     * :h fold -> Open help pages for more ideas (:q! to quit)
 #
 # Sections:
 #   -> General
@@ -36,14 +41,22 @@ alias a="alias"
 alias uplay="/Users/kneiser/Library/Application\ Support/Steam/steamapps/common/Assassins\ Creed\ Brotherhood/Assassin\'s\ Creed\ Brotherhood.app/Contents/MacOS/acbmp_sf"
 alias b="tput bell"
 #function c { cd $(printf "%0.s../" {1..${1}}; )} # cd "../" * arg1
-alias d="vimdiff"
+alias d="docker"
+alias dc="docker container"
+alias di="docker image"
+alias dl="docker logs"
+alias dn="docker network"
+alias dp="docker ps"
 alias e="emacs -nw"
 alias f="find . -name"
 alias ff="find . -type f -name"
 alias fd="find . -type d -name"
+alias k="kubectl"
 alias l="less --LINE-NUMBERS --LONG-PROMPT --CLEAR-SCREEN --squeeze-blank-lines --ignore-case --hilite-search --RAW-CONTROL-CHARS --SILENT --HILITE-UNREAD"
 alias m="man"
+alias mr="make run"
 alias v="vim"
+alias vd="vimdiff"
 #alias y=""
 function z { %${1}; } # job control: ctrl-z & z
 
@@ -61,6 +74,9 @@ alias rm="rm -i"
 ###############################################{{{
 alias s="ls -FG"
 alias sa="ls -aFG" 
+alias sl="ls -lFG"
+alias sla="ls -alFG"
+alias sal="ls -alFG"
 alias sd="cd" # sue me
 alias se="printenv"
 function sg { grep -rni --color=always "${1}" . | less; }
@@ -86,6 +102,9 @@ alias on="open -n"
 
 # Search history for next alias
 alias new="history | awk '{print $2}' | sort | uniq -c | sort"
+
+# Pretty-print filesystem tree
+alias tree="find . | sed -e 's/[^-][^\/]*\//  |/g' -e 's/|\([^ ]\)/|-\1/'"
 
 
 ###############################################}}}
@@ -124,8 +143,9 @@ alias ga="git add"
 alias gb="git branch"
 alias gba="git branch -a"
 alias gc="git commit -m"
-alias gd="git diff"
-alias gds="git diff --staged"
+alias gca="git commit --amend"
+alias gd="git diff --word-diff"
+alias gds="git diff --word-diff --staged"
 alias gf="git fetch"
 alias gfa="git fetch -a"
 alias gg="git grep"
@@ -156,7 +176,7 @@ function gx { g++ -g -std=c++11 $@ && ./a.out; }
 function brewup {
 	brew update
 	brew upgrade
-	brew cleanup --prune-prefix #brew prune
+	brew cleanup #--prune-prefix #brew prune
 	#brew cleanup
 	brew doctor
 }
@@ -175,7 +195,7 @@ function notify {
 
 # Muh daily python
 function python4 {
-    cd $(find ~ -type d -name 'cpython' -maxdepth 6 -print -quit)
+    cd $(find ~ -type d -name 'cpython' -maxdepth 4 -print -quit)
 
     if [ $# -ne 0 ]; then
         clear
