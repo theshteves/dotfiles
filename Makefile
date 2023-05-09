@@ -4,10 +4,11 @@ PWD=$(shell pwd)
 all: brew
 	ln -fs $(PWD)/.bash_profile ~/
 	ln -fs $(PWD)/.bashrc ~/
-	ln -fs $(PWD)/.vimrc ~/
+	ln -fs $(PWD)/.digrc ~/
 	ln -fs $(PWD)/.emacs ~/
 	ln -fs $(PWD)/.gitconfig ~/
 	ln -fs $(PWD)/.gitignore_global ~/
+	ln -fs $(PWD)/.vimrc ~/
 	cp $(PWD)/fonts/lucida-console.ttf ~/Library/Fonts/ # TODO: Update terminal prefs (shell, font, color: #46DEEB, window: 120 x 48)
 
 brew:

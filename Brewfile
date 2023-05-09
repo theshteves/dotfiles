@@ -15,6 +15,7 @@ brew 'lolcat'
 #brew 'node'
 brew 'openssl'
 brew 'python3'
+brew 'rbenv'
 #brew 'tmux'
 #brew 'reattach-to-user-namespace' # pbcopy & pbpaste for tmux
 #brew 'wget'
