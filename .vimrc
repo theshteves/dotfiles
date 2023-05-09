@@ -130,9 +130,9 @@ set encoding=utf8
 """""""""""""""""""""""""""""""""""""""""""""""{{{
 " 1 tab == 4 spaces
 set expandtab
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
 
 set ai "Auto indent
 set si "Smart indent
@@ -200,6 +200,9 @@ set laststatus=2
 
 " Opens .json files as if they were a javascript filetype
 autocmd BufNewFile,BufRead *.json set ft=javascript
+
+" .sol is for Solidity
+autocmd BufNewFile,BufRead *.sol set ft=sol
 
 " Ignores capital-typos on write/quit
 " Inspired by: http://alexander-hill.tumblr.com/post/78142366738/how-to-fix-the-capital-w-annoyance-in-vim
