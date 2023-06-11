@@ -1,7 +1,15 @@
 PWD=$(shell pwd)
 
 #.PHONY: all
-all: brew
+all: links packages
+	cp $(PWD)/fonts/lucida-console.ttf ~/Library/Fonts/ # TODO: Update termina    l prefs (shell, font, color: #46DEEB, window: 120 x 48)
+
+packages:
+	#TODO: split into OS-specific branches here
+	if [ $(command -v brew) == "" ] ; then curl -fsSL https://raw.githubuserco    ntent.com/Homebrew/install/master/install.sh | /bin/bash; else brew update;     fi
+	brew bundle --file $(PWD)/Brewfile
+
+links:
 	ln -fs $(PWD)/.bash_profile ~/
 	ln -fs $(PWD)/.bashrc ~/
 	ln -fs $(PWD)/.digrc ~/
@@ -9,8 +17,4 @@ all: brew
 	ln -fs $(PWD)/.gitconfig ~/
 	ln -fs $(PWD)/.gitignore_global ~/
 	ln -fs $(PWD)/.vimrc ~/
-	cp $(PWD)/fonts/lucida-console.ttf ~/Library/Fonts/ # TODO: Update terminal prefs (shell, font, color: #46DEEB, window: 120 x 48)
-
-brew:
-	if [ $(command -v brew) == "" ] ; then curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | /bin/bash; else brew update; fi
-	brew bundle --file $(PWD)/Brewfile
+	source $(PWD)/.bash_profile
