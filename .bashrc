@@ -220,6 +220,7 @@ function gimme {
       if [ -x "$(command -v apk)" ];        then sudo apk update && sudo apk upgrade # Alpine
       elif [ -x "$(command -v apt-get)" ];  then sudo apt-get update && sudo apt-get-upgrade # Debian
       elif [ -x "$(command -v dnf)" ];      then sudo dnf up --ref # Fedora
+      elif [ -x "$(command -v pacman)" ];   then sudo pacman -Syyu # Arch
       else echo "What?\nWhat kind of no-name package manager are you even using?">&2;
       fi
       ;;
