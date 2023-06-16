@@ -200,32 +200,40 @@ alias plz='sudo $(history -p !!)'
 alias packet-loss="ping -A 1.1.1.1"
 function gx { g++ -g -std=c++2x $@ && ./a.out; }
 
-# Package Management made simple
-function gimme {
-  case "$OSTYPE" in
-    darwin*)
-	brew update
-	brew upgrade
-	brew cleanup #--prune-prefix #brew prune
-	#brew cleanup
-	brew doctor
-  ;;
-  esac
-}
-
 
 ###############################################}}}
 #
 # MACHINE-SPECIFIC
 #
 ###############################################{{{
+# Package Management made simple
+function gimme {
+  case "$OSTYPE" in
+    darwin*)
+      brew update
+      brew upgrade
+      brew cleanup #--prune-prefix #brew prune
+      #brew cleanup
+      brew doctor
+      ;;
+    linux*)
+      if [ -x "$(command -v apk)" ];        then sudo apk update && sudo apk upgrade # Alpine
+      elif [ -x "$(command -v apt-get)" ];  then sudo apt-get update && sudo apt-get-upgrade # Debian
+      elif [ -x "$(command -v dnf)" ];      then sudo dnf up --ref # Fedora
+      else echo "What?\nWhat kind of no-name package manager are you even using?">&2;
+      fi
+      ;;
+  esac
+}
+
+
 # OS X push notification
 function notify {
   case "$OSTYPE" in
     darwin*)
-  _notif='display notification '"${1}"' with title '"${2}"
-  reattach-to-user-namespace osascript -e $_notif
-  ;;
+      _notif='display notification '"${1}"' with title '"${2}"
+      reattach-to-user-namespace osascript -e $_notif
+      ;;
   esac
 }
 
@@ -247,7 +255,7 @@ function python4 {
         read -n 1 -s -r -p "Press any key to continue..."
     fi
 
-	clear
-	./python.exe
-	cd -
+    clear
+    ./python.exe
+    cd -
 }
