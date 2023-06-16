@@ -72,11 +72,31 @@ alias rm="rm -i"
 # STATUS
 #
 ###############################################{{{
+case "$OSTYPE" in
+  darwin*)
 alias s="ls -FG"
-alias sa="ls -aFG" 
+alias sa="ls -aFG"
 alias sl="ls -lFG"
 alias sla="ls -alFG"
 alias sal="ls -alFG"
+alias st="ls -FGtr"
+alias sta="ls -aFGtr"
+alias sat="ls -aFGtr"
+alias sr="ls -aFGR | less"
+;;
+  *)
+alias s="ls -F --color=auto"
+alias sa="ls -aF --color=auto" 
+alias sl="ls -lF --color=auto"
+alias sla="ls -alF --color=auto"
+alias sal="ls -alF --color=auto"
+alias st="ls -Ftr --color=auto"
+alias sta="ls -aFtr --color=auto"
+alias sat="ls -aFtr --color=auto"
+alias sr="ls -aFR --color=auto | less"
+;;
+esac
+
 alias sd="cd" # sue me
 alias se="printenv"
 function sg { grep -rni --color=always "${1}" . | less; }
@@ -84,7 +104,6 @@ alias sj="jupyter notebook"
 function sloc { find . -name "${1}" | xargs wc -l | sort; }
 alias sm="mail -v"
 alias sp="ps aux"
-alias sr="ls -aFGR | less"
 alias sz="jobs"
 
 
@@ -95,9 +114,18 @@ alias sz="jobs"
 ###############################################{{{
 alias ff="find . -type f -name"
 alias fd="find . -type d -name"
+case "$OSTYPE" in
+  darwin*)
 alias n="clear && ls -FG && echo && git status -s --untracked-files=normal"
 alias na="clear && ls -aFG && echo && git status -s --untracked-files=normal --long --verbose"
-function no { echo ${*} >> ~/.notes; } # because I'm a thoughtful guy
+;;
+  *)
+alias n="clear && ls -F --color=auto && echo && git status -s --untracked-files=normal"
+alias na="clear && ls -aF --color=auto && echo && git status -s --untracked-files=normal --long --verbose"
+;;
+esac
+
+function no { echo ${*} >> ~/.notes; } # because I'm a thoughtful thinkboi
 alias on="open -n"
 
 # Search history for next alias
@@ -170,15 +198,19 @@ alias advice="fortune -s | say"
 alias play="mpg123 ~/.soundcloud2000/*.mp3"
 alias plz='sudo $(history -p !!)'
 alias packet-loss="ping -A 1.1.1.1"
-function gx { g++ -g -std=c++11 $@ && ./a.out; }
+function gx { g++ -g -std=c++2x $@ && ./a.out; }
 
 # Package Management made simple
-function brewup {
+function gimme {
+  case "$OSTYPE" in
+    darwin*)
 	brew update
 	brew upgrade
 	brew cleanup #--prune-prefix #brew prune
 	#brew cleanup
 	brew doctor
+  ;;
+  esac
 }
 
 
@@ -189,8 +221,12 @@ function brewup {
 ###############################################{{{
 # OS X push notification
 function notify {
-    _notif='display notification '"${1}"' with title '"${2}"
-    reattach-to-user-namespace osascript -e $_notif
+  case "$OSTYPE" in
+    darwin*)
+  _notif='display notification '"${1}"' with title '"${2}"
+  reattach-to-user-namespace osascript -e $_notif
+  ;;
+  esac
 }
 
 # Muh daily python
