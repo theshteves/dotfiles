@@ -10,3 +10,9 @@
 	default = tracking
 [github]
 	user = theshteves
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
+[diff]
+	submodule = log
