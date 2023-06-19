@@ -52,7 +52,7 @@ alias f="find . -name"
 alias ff="find . -type f -name"
 alias fd="find . -type d -name"
 alias k="kubectl"
-alias l="less --LINE-NUMBERS --LONG-PROMPT --CLEAR-SCREEN --squeeze-blank-lines --ignore-case --hilite-search --RAW-CONTROL-CHARS --SILENT --HILITE-UNREAD"
+function l { $@ | less --LINE-NUMBERS --LONG-PROMPT --CLEAR-SCREEN --squeeze-blank-lines --ignore-case --hilite-search --RAW-CONTROL-CHARS --SILENT --HILITE-UNREAD; }
 alias m="man"
 alias mr="make run"
 alias v="vim"

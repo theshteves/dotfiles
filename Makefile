@@ -17,4 +17,4 @@ links:
 	ln -fs $(PWD)/.gitconfig ~/
 	ln -fs $(PWD)/.gitignore_global ~/
 	ln -fs $(PWD)/.vimrc ~/
-	source $(PWD)/.bash_profile
+	source ~/.bash_profile
