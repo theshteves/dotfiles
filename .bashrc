@@ -39,25 +39,21 @@ fi
 
 alias a="alias"
 alias uplay="/Users/kneiser/Library/Application\ Support/Steam/steamapps/common/Assassins\ Creed\ Brotherhood/Assassin\'s\ Creed\ Brotherhood.app/Contents/MacOS/acbmp_sf"
-alias b="tput bell"
 #function c { cd $(printf "%0.s../" {1..${1}}; )} # cd "../" * arg1
 alias d="docker"
 alias dc="docker container"
+function de { docker exec -it ${1} /bin/bash --login; }
 alias di="docker image"
 alias dl="docker logs"
 alias dn="docker network"
 alias dp="docker ps"
 alias e="emacs -nw"
-alias f="find . -name"
-alias ff="find . -type f -name"
-alias fd="find . -type d -name"
 alias k="kubectl"
 function l { $@ | less --LINE-NUMBERS --LONG-PROMPT --CLEAR-SCREEN --squeeze-blank-lines --ignore-case --hilite-search --RAW-CONTROL-CHARS --SILENT --HILITE-UNREAD; }
 alias m="man"
 alias mr="make run"
 alias v="vim"
 alias vd="vimdiff"
-#alias y=""
 function z { %${1}; } # job control: ctrl-z & z
 
 # Safe actions
@@ -112,8 +108,9 @@ alias sz="jobs"
 # NAVIGATION
 #
 ###############################################{{{
-alias ff="find . -type f -name"
-alias fd="find . -type d -name"
+function ff { find \. -type f -maxdepth ${2-5} -name ${1} 2> /dev/null; }
+function fd { find \. -type d -maxdepth ${2-5} -name ${1} 2> /dev/null; }
+
 case "$OSTYPE" in
   darwin*)
 alias n="clear && ls -FG && echo && git status -s --untracked-files=normal"
