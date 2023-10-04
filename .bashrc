@@ -46,10 +46,17 @@ function de { docker exec -it ${1} /bin/bash --login; }
 alias di="docker image"
 alias dl="docker logs"
 alias dn="docker network"
-alias dp="docker ps"
+alias dp='docker ps --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"'
+alias dcup="docker compose up -d"
+alias dcupf="docker compose up -d && docker compose --follow logs"
+alias dcdown="docker compose down"
+#alias docker-compose="docker compose"
 alias e="emacs -nw"
 alias k="kubectl"
-function l { $@ | less --LINE-NUMBERS --LONG-PROMPT --CLEAR-SCREEN --squeeze-blank-lines --ignore-case --hilite-search --RAW-CONTROL-CHARS --SILENT --HILITE-UNREAD; }
+alias kg="kubectl get"
+alias kga="kubectl get ns | awk '{print \$1}' | tail -n +2 | xargs -I % sh -c 'echo \"==> \\033[31;1;4m%\\033[0m\"; kubectl get -n % all; echo \"\\n\"'"
+function l { $(history -p !!) | less --LINE-NUMBERS --LONG-PROMPT --CLEAR-SCREEN --squeeze-blank-lines --ignore-case --hilite-search --RAW-CONTROL-CHARS --SILENT --HILITE-UNREAD; }
+#TODO: function l should capture the previous command's stdout into `less`, or at very least re-execute it (even though that would be problematic with stateful commands)
 alias m="man"
 alias mr="make run"
 alias v="vim"
@@ -108,8 +115,9 @@ alias sz="jobs"
 # NAVIGATION
 #
 ###############################################{{{
-function ff { find \. -type f -maxdepth ${2-5} -name ${1} 2> /dev/null; }
-function fd { find \. -type d -maxdepth ${2-5} -name ${1} 2> /dev/null; }
+alias fb="du -ht 1G \. 2>/dev/null | sort -hr"
+function ff { find \. -type f -maxdepth ${2-5} -name "${1}" 2> /dev/null; }
+function fd { find \. -type d -maxdepth ${2-5} -name "${1}" 2> /dev/null; }
 
 case "$OSTYPE" in
   darwin*)
@@ -215,7 +223,7 @@ function gimme {
       ;;
     linux*)
       if [ -x "$(command -v apk)" ];        then sudo apk update && sudo apk upgrade # Alpine
-      elif [ -x "$(command -v apt-get)" ];  then sudo apt-get update && sudo apt-get-upgrade # Debian
+      elif [ -x "$(command -v apt-get)" ];  then sudo apt-get update && sudo apt-get upgrade # Debian
       elif [ -x "$(command -v dnf)" ];      then sudo dnf up --ref # Fedora
       elif [ -x "$(command -v pacman)" ];   then sudo pacman -Syyu # Arch
       else echo "What?\nWhat kind of no-name package manager are you even using?">&2;

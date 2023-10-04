@@ -27,12 +27,11 @@ WELCOME_MSG=$(cat <<-TEMP_MULTILINE_STRING
 ░ ░▒  ░ ░░ ░▒ ▒░░ ░░   ░ ▒░ ░ ░  ░ ▒ ░░ ░▒  ░ ░ ░ ░  ░  ░▒ ░ ▒░
 ░  ░  ░  ░ ░░ ░    ░   ░ ░    ░    ▒ ░░  ░  ░     ░     ░░   ░ 
       ░  ░  ░            ░    ░  ░ ░        ░     ░  ░   ░     
-.
 TEMP_MULTILINE_STRING
 )
 case "$OSTYPE" in
   darwin*)
-echo "$WELCOME_MSG $(fortune -s | cowsay -f dragon)" | lolcat -a -d 1 &
+printf "$WELCOME_MSG \n $(fortune -s | cowsay -f dragon) \n" | lolcat -a -d 1 &
 ;;
   *)
 echo "$WELCOME_MSG" &
@@ -50,8 +49,8 @@ fi
 # "We program for the world." --Charles Owen
 export LANGUAGE="en_US.UTF-8"
 export LANG="en_US.UTF-8"
-export LC_ALL="en_US.UTF-8"
-export LC_CTYPE="en_US.UTF-8"
+#export LC_ALL="en_US.UTF-8"
+#export LC_CTYPE="en_US.UTF-8"
 
 
 # General customizations
