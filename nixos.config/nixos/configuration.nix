@@ -51,7 +51,7 @@
           user = "bruh";
         };
         #sddm.enable = true;
-        defaultSession = "none+i3";
+        defaultSession = "none+i3"; # xfce+i3 is best of both worlds
         lightdm = {
           enable = true;
           background = "#222222";
@@ -62,7 +62,7 @@
         '';
         #setupCommands = {};
       };
-      windowManager = {
+      windowManager = { #TODO: try hyprland + catppuccin someday
         i3 = {
           enable = true;
           extraPackages = with pkgs; [
@@ -78,7 +78,7 @@
       };
       desktopManager = {
         xterm.enable = true;
-        #xfce.enable = true;
+        xfce.enable = true;
         #plasma5.enable = true;
       };
       libinput.enable = true; # enable touchpad support
@@ -101,6 +101,7 @@
   nix.settings = {
     experimental-features = "nix-command flakes";
     auto-optimise-store = true;
+    allowed-users = [ "bruh" ];
   };
 
   nixpkgs = {
@@ -126,6 +127,7 @@
   #  config.nix.registry;
 
   environment.systemPackages = with pkgs; [
+    bashInteractive
     vim
     git
     #polybar
@@ -135,8 +137,10 @@
     #bspwm
     #sxhkd
     xterm
-    roboto-mono
     xorg.xrdb
+    feh
+    xclip
+    #roboto-mono
   ];
 
   environment.sessionVariables = {
@@ -145,19 +149,22 @@
 
   environment.pathsToLink = [ "/libexec" ]; # Links /libexec from derivations to /run/current-system/sw
 
-  users.users = {
-    bruh = {
-      isNormalUser = true;
-      password = "bruh";  #TODO: Reset w/ 'passwd'
-      extraGroups = [ "wheel" "networkmanager" ]; # "wheel" enables 'sudo' # audio, docker, etc
-      packages = with pkgs; [
-        firefox
-        btop
-        parted
-        neofetch
-        duf
-        roboto-mono
-      ];
+  users = {
+    defaultUserShell = pkgs.bashInteractive; #TODO: remove redundancy
+    users = {
+      bruh = {
+        isNormalUser = true;
+        password = "bruh";  #TODO: Reset w/ 'passwd'
+        extraGroups = [ "wheel" "networkmanager" ]; # "wheel" enables 'sudo' # audio, docker, etc
+        packages = with pkgs; [
+          firefox  #TODO: uBlock origin
+          btop
+          parted
+          neofetch
+          duf
+          #roboto-mono
+        ];
+      };
     };
   };
 
@@ -168,6 +175,7 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
+  programs.hyprland.enable = true;
 
   # Backup config file: /run/current-system/configuration.nix
   system.copySystemConfiguration = true;
