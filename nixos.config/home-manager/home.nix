@@ -1,10 +1,36 @@
-{
-  inputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}: {
+{ config, inputs, lib, pkgs, ... }:
+let
+  dotfilesRepo = "https://github.com/theshteves/dotfiles.git";
+  dotfilesDir = "${config.home.homeDirectory}/dotfiles";
+in {
+  home = {
+    username = "bruh";
+    homeDirectory = "/home/bruh";
+  };
+
+  home.packages = with pkgs; [
+    git
+    gnumake
+    #steam
+  ];
+
+  programs.home-manager.enable = true;
+  programs.git.enable = true;
+
+  # Use 'home.activation' to ensure the operation is performed
+  #   when Home Manager is activated
+  home.activation.cloneDotfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if [ ! -d ${dotfilesDir} ]; then
+      echo "Cloning dotfiles from ${dotfilesRepo} to ${dotfilesDir}"
+      git clone ${dotfilesRepo} ${dotfilesDir}
+      pushd ${dotfilesDir}
+      make
+      popd
+    else
+      echo "Dotfiles directory already exists at ${dotfilesDir}"
+    fi
+  '';
+
   imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
@@ -33,22 +59,10 @@
     };
   };
 
-  home = {
-    username = "bruh";
-    homeDirectory = "/home/bruh";
-  };
-
-  # Add stuff for your user as you see fit:
-  # programs.neovim.enable = true;
-  # home.packages = with pkgs; [ steam ];
-
-  # Enable home-manager and git
-  programs.home-manager.enable = true;
-  programs.git.enable = true;
-
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   home.stateVersion = "23.11";
+}
 }

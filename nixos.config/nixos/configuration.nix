@@ -1,6 +1,6 @@
 # configuration.nix(5) man page
 # https://search.nixos.org/options
-# in the NixOS manual (`nixos-help`)
+# in the NixOS manual ('nixos-help')
 { config, inputs, lib, pkgs, ... }:
 {
   imports = [
@@ -20,14 +20,6 @@
     };
     efi = {
       canTouchEfiVariables = true;
-      #efiSysMountPoint = "/boot/efi";
-    };
-    grub = {
-      #enable = true;
-      useOSProber = true;
-      #efiSupport = true;
-      #efiInstallAsRemovable = true;
-      #device = "/dev/sda"; # or "nodev" for efi only
     };
   };
 
@@ -48,10 +40,51 @@
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
 
-  #services.xserver.enable = true;
-  #services.xserver.xkb.layout = "us";
-  #services.xserver.xkb.options = "eurosign:e,caps:escape";
-  #services.xserver.libinput.enable = true; # enable touchpad support
+  services = {
+    xserver = {
+      enable = true;
+      xkb.layout = "us";
+      #xkb.options = "eurosign:e,caps:escape";
+      displayManager = {
+        autoLogin = {
+          enable = true;
+          user = "bruh";
+        };
+        #sddm.enable = true;
+        defaultSession = "none+i3";
+        lightdm = {
+          enable = true;
+          background = "#222222";
+          #greeter.enable = true;
+        };
+        sessionCommands = ''
+          ${pkgs.xorg.xrdb}/bin/xrdb -merge ~/.Xdefaults
+        '';
+        #setupCommands = {};
+      };
+      windowManager = {
+        i3 = {
+          enable = true;
+          extraPackages = with pkgs; [
+            dmenu
+            i3status
+            i3lock
+            i3blocks
+          ];
+        };
+        #bspwm = {
+        #  enable = true;
+        #};
+      };
+      desktopManager = {
+        xterm.enable = true;
+        #xfce.enable = true;
+        #plasma5.enable = true;
+      };
+      libinput.enable = true; # enable touchpad support
+    };
+    #printing.enable = true;
+  };
   # services.printing.enable = true;
   # services.openssh = {
   #   enable = true;
@@ -64,6 +97,18 @@
 
   # sound.enable = true;
   # hardware.pulseaudio.enable = true;
+
+  nix.settings = {
+    experimental-features = "nix-command flakes";
+    auto-optimise-store = true;
+  };
+
+  nixpkgs = {
+    #overlays = [];
+    config = {
+      allowUnfree = true;
+    };
+  };
 
   # This will add each flake input as a registry
   # To make nix3 commands consistent with your flake
@@ -80,31 +125,38 @@
   #  })
   #  config.nix.registry;
 
-  nix.settings = {
-    experimental-features = "nix-command flakes";
-    auto-optimise-store = true;
-  };
-
-  nixpkgs = {
-    #overlays = [];
-    config = {
-      allowUnfree = true;
-    };
-  };
-
   environment.systemPackages = with pkgs; [
     vim
     git
+    #polybar
+    #feh
+    #picom
+    #mumble
+    #bspwm
+    #sxhkd
+    xterm
+    roboto-mono
+    xorg.xrdb
   ];
+
+  environment.sessionVariables = {
+    EDITOR = "vim";
+  };
+
+  environment.pathsToLink = [ "/libexec" ]; # Links /libexec from derivations to /run/current-system/sw
 
   users.users = {
     bruh = {
       isNormalUser = true;
-      password = "bruh";  #TODO: Reset w/ `passwd`
-      extraGroups = [ "wheel" "networkmanager" ]; # "wheel" enables `sudo` # audio, docker, etc
+      password = "bruh";  #TODO: Reset w/ 'passwd'
+      extraGroups = [ "wheel" "networkmanager" ]; # "wheel" enables 'sudo' # audio, docker, etc
       packages = with pkgs; [
-        vim
-        git
+        firefox
+        btop
+        parted
+        neofetch
+        duf
+        roboto-mono
       ];
     };
   };
