@@ -6,30 +6,41 @@ in {
   home = {
     username = "bruh";
     homeDirectory = "/home/bruh";
+
+    packages = with pkgs; [
+      git
+      gnumake
+      #steam
+      btop
+      neofetch
+      # fortune cowsay lolcat
+      # irssi
+      # tmux
+      # node
+      # python
+      # bash-git-prompt
+      # docker/rancher firefox flux dropbox slack??
+    ];
+
+    # Use 'home.activation' to ensure the operation is performed
+    #   when Home Manager is activated
+    activation.cloneDotfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      if [ ! -d ${dotfilesDir} ]; then
+        echo "Cloning dotfiles from ${dotfilesRepo} to ${dotfilesDir}"
+        git clone ${dotfilesRepo} ${dotfilesDir}
+        pushd ${dotfilesDir}
+        make
+        popd
+      else
+        echo "Dotfiles directory already exists at ${dotfilesDir}"
+      fi
+    '';
   };
 
-  home.packages = with pkgs; [
-    git
-    gnumake
-    #steam
-  ];
-
-  programs.home-manager.enable = true;
-  programs.git.enable = true;
-
-  # Use 'home.activation' to ensure the operation is performed
-  #   when Home Manager is activated
-  home.activation.cloneDotfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    if [ ! -d ${dotfilesDir} ]; then
-      echo "Cloning dotfiles from ${dotfilesRepo} to ${dotfilesDir}"
-      git clone ${dotfilesRepo} ${dotfilesDir}
-      pushd ${dotfilesDir}
-      make
-      popd
-    else
-      echo "Dotfiles directory already exists at ${dotfilesDir}"
-    fi
-  '';
+  programs = {
+    home-manager.enable = true;
+    git.enable = true;
+  };
 
   imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors):

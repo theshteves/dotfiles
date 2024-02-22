@@ -14,6 +14,8 @@
     ./hardware-configuration.nix
   ];
 
+  hardware.opengl.enable = true;
+
   boot.loader = {
     systemd-boot = {
       enable = true;
@@ -28,7 +30,7 @@
 
   networking.hostName = "hostbruh";
   networking.networkmanager.enable = true;
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -43,7 +45,13 @@
   services = {
     xserver = {
       enable = true;
+      #autorun = false;
       xkb.layout = "us";
+      virtualScreen = {
+        x = 1920;
+        y = 1080;
+      };
+      videoDrivers = lib.mkOverride 10 [ "vmware" ];
       #xkb.options = "eurosign:e,caps:escape";
       displayManager = {
         autoLogin = {
@@ -54,8 +62,8 @@
         defaultSession = "none+i3"; # xfce+i3 is best of both worlds
         lightdm = {
           enable = true;
-          background = "#222222";
           #greeter.enable = true;
+          background = "/home/bruh/dotfiles/nixos.config/home-manager/wallpaper-nixos-1920x1080.jpg"; #"#222222";
         };
         sessionCommands = ''
           ${pkgs.xorg.xrdb}/bin/xrdb -merge ~/.Xdefaults
@@ -77,23 +85,31 @@
         #};
       };
       desktopManager = {
-        xterm.enable = true;
-        xfce.enable = true;
+        #xfce.enable = true;
+        #xterm.enable = true;
         #plasma5.enable = true;
       };
       libinput.enable = true; # enable touchpad support
     };
     #printing.enable = true;
+    picom = {
+      enable = true;
+      shadow = true;
+      inactiveOpacity = 0.5;
+      activeOpacity = 0.8;
+      fadeDelta = 10; #4;
+      fade = true;
+    };
   };
   # services.printing.enable = true;
-  # services.openssh = {
-  #   enable = true;
-  #   settings = {
-  #     # Forbid root login through SSH.
-  #     PermitRootLogin = "no";
-  #     PasswordAuthentication = false;
-  #   };
-  # };
+  services.openssh = {
+    enable = true;
+    settings = {
+      # Forbid root login through SSH.
+      PermitRootLogin = "no";
+      PasswordAuthentication = true;  #TODO: disable
+    };
+  };
 
   # sound.enable = true;
   # hardware.pulseaudio.enable = true;
@@ -130,9 +146,6 @@
     bashInteractive
     vim
     git
-    #polybar
-    #feh
-    #picom
     #mumble
     #bspwm
     #sxhkd
@@ -141,10 +154,17 @@
     feh
     xclip
     #roboto-mono
+    #kitty
+    #keepassxc
+    alacritty
+    polybar
+    picom
+    home-manager
   ];
 
   environment.sessionVariables = {
     EDITOR = "vim";
+    TERMINAL = "alacritty";
   };
 
   environment.pathsToLink = [ "/libexec" ]; # Links /libexec from derivations to /run/current-system/sw
@@ -175,7 +195,7 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-  programs.hyprland.enable = true;
+  #programs.hyprland.enable = true;
 
   # Backup config file: /run/current-system/configuration.nix
   system.copySystemConfiguration = true;

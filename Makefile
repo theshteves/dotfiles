@@ -6,12 +6,15 @@ PWD=$(shell pwd)
 
 #.PHONY: all
 all: common #darwin
-	case "$OSTYPE" in
-		darwin*)
-			echo "tehe"
-			;;
+	case "$$OSTYPE" in \
+		darwin*) \
+			echo "e" \
+			;; \
+		linux*) \
+			echo "bruh" \
+			;; \
 	esac
-	cp $(PWD)/fonts/lucida-console.ttf ~/Library/Fonts/ # TODO: Update terminal prefs (shell, font, color: #46DEEB, window: 120 x 48)
+	#cp $(PWD)/fonts/lucida-console.ttf ~/Library/Fonts/ # TODO: Update terminal prefs (shell, font, color: #46DEEB, window: 120 x 48)
 
 common:
 	ln -sfn $(PWD)/.bash_profile ~/
@@ -22,6 +25,8 @@ common:
 	ln -sfn $(PWD)/.gitignore_global ~/
 	ln -sfn $(PWD)/.vimrc ~/
 	source ~/.bash_profile
+	#ln -sfn $(PWD)/nixos.config ~/.config  # TODO: fix non-recursion's hack below
+	#ln -sfn $(PWD)/nixos.config/home-manager/home.nix ~/.config/home-manager/
 
 darwin:
 	if [ $(command -v brew) == "" ] ; then curl -fsSL https://raw.githubuserco    ntent.com/Homebrew/install/master/install.sh | /bin/bash; else brew update;     fi
