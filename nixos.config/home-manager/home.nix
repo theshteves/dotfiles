@@ -1,79 +1,91 @@
-{ config, inputs, lib, pkgs, ... }:
-let
-  dotfilesRepo = "https://github.com/theshteves/dotfiles.git";
-  dotfilesDir = "${config.home.homeDirectory}/dotfiles";
-in {
-  home = {
-    username = "bruh";
-    homeDirectory = "/home/bruh";
+{ config, lib, pkgs, ... }:
 
-    packages = with pkgs; [
-      git
-      gnumake
-      #steam
-      btop
-      neofetch
-      # fortune cowsay lolcat
-      # irssi
-      # tmux
-      # node
-      # python
-      # bash-git-prompt
-      # docker/rancher firefox flux dropbox slack??
-    ];
+{
+  # Home Manager needs a bit of information about you and the paths it should
+  # manage.
+  home.username = "bruh";
+  home.homeDirectory = "/home/bruh";
 
-    # Use 'home.activation' to ensure the operation is performed
-    #   when Home Manager is activated
-    activation.cloneDotfiles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      if [ ! -d ${dotfilesDir} ]; then
-        echo "Cloning dotfiles from ${dotfilesRepo} to ${dotfilesDir}"
-        git clone ${dotfilesRepo} ${dotfilesDir}
-        pushd ${dotfilesDir}
-        make
-        popd
-      else
-        echo "Dotfiles directory already exists at ${dotfilesDir}"
-      fi
-    '';
+  # This value determines the Home Manager release that your configuration is
+  # compatible with. This helps avoid breakage when a new Home Manager release
+  # introduces backwards incompatible changes.
+  #
+  # You should not change this value, even if you update Home Manager. If you do
+  # want to update the value, then make sure to first check the Home Manager
+  # release notes.
+  home.stateVersion = "23.11"; # Please read the comment before changing.
+
+  # The home.packages option allows you to install Nix packages into your
+  # environment.
+  home.packages = [
+    # # Adds the 'hello' command to your environment. It prints a friendly
+    # # "Hello, world!" when run.
+    # pkgs.hello
+
+    # # It is sometimes useful to fine-tune packages, for example, by applying
+    # # overrides. You can do that directly here, just don't forget the
+    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
+    # # fonts?
+    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+
+    # # You can also create simple shell scripts directly inside your
+    # # configuration. For example, this adds a command 'my-hello' to your
+    # # environment:
+    # (pkgs.writeShellScriptBin "my-hello" ''
+    #   echo "Hello, ${config.home.username}!"
+    # '')
+
+    pkgs.bashInteractive
+  ];
+
+  # Home Manager is pretty good at managing dotfiles. The primary way to manage
+  # plain files is through 'home.file'.
+  home.file = {
+    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
+    # # symlink to the Nix store copy.
+    # ".screenrc".source = dotfiles/screenrc;
+
+    # # You can also set the file content immediately.
+    # ".gradle/gradle.properties".text = ''
+    #   org.gradle.console=verbose
+    #   org.gradle.daemon.idletimeout=3600000
+    # '';
+    ".bash_profile".source = lib.mkForce /home/bruh/dotfiles/.bash_profile;
+    ".bashrc".source = lib.mkForce /home/bruh/dotfiles/.bashrc;
+    ".vimrc".source = lib.mkForce /home/bruh/dotfiles/.vimrc;
+  };
+
+  # Home Manager can also manage your environment variables through
+  # 'home.sessionVariables'. If you don't want to manage your shell through Home
+  # Manager then you have to manually source 'hm-session-vars.sh' located at
+  # either
+  #
+  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+  #
+  # or
+  #
+  #  /etc/profiles/per-user/bruh/etc/profile.d/hm-session-vars.sh
+  #
+  home.sessionVariables = {
+    EDITOR = "vim";
+    TERMINAL = "alacritty";
+    NIX_SHELL_PRESERVE_PROMPT = 1; # https://unix.stackexchange.com/a/691405 + https://bleepcoder.com/alacritty/293206538/default-shell-on-macos-should-use-login
   };
 
   programs = {
+    # Let Home Manager install and manage itself.
     home-manager.enable = true;
-    git.enable = true;
-  };
-
-  imports = [
-    # If you want to use home-manager modules from other flakes (such as nix-colors):
-    # inputs.nix-colors.homeManagerModule
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
-  ];
-
-  nixpkgs = {
-    overlays = [
-      # If you want to use overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
-    ];
-    # Configure your nixpkgs instance
-    config = {
-      allowUnfree = true;
-      # Workaround for https://github.com/nix-community/home-manager/issues/2942
-      allowUnfreePredicate = _: true;
+    
+    bash = {
+      enable = true;
+      #profileExtra = builtins.readFile ./bash_profile;
+      #initExtra = builtins.readFile ./bashrc;
+      #undistractMe (NixOS search programs.bash !!)
+    };
+    git = {
+      enable = true;
+      userName = "theshteves";
+      userEmail = "stevenkneiser@gmail.com";
     };
   };
-
-  # Nicely reload system units when changing configs
-  systemd.user.startServices = "sd-switch";
-
-  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
-  home.stateVersion = "23.11";
-}
 }
