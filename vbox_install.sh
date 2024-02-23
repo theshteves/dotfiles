@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
 
 # Inspired by: https://gist.github.com/Vincibean/baf1b76ca5147449a1a479b5fcc9a222#file-my-nixos-installation-md
+#TODO: Install nixos-minimal-[VERSION].iso
+#TODO: what if no internet on new machine?
+#TODO: pre-install via home-manager?? instead of vbox_install.sh?
+
 
 # Pre-installation
-#TODO: what if no internet on new machine?
-#TODO: Install nixos-minimal-[VERSION].iso
-
 # nix-shell -p git parted home-manager # gnumake vim
-#TODO: pre-install via home-manager?? instead of vbox_install.sh?
 # git clone https://github.com/theshteves/dotfiles.git
-# cd dotfiles
+# cd dotfiles/nixos.config
 # chmod +x vbox_install.sh
 # sudo ./vbox_install.sh
+
 
 # Partitioning (UEFI)
 DRIVE="/dev/sda"
@@ -32,18 +33,18 @@ mkswap -L swap /dev/sda3
 # Installation
 mount /dev/disk/by-label/nixos /mnt
 mkdir -p /mnt/boot
-mount /dev/disk/by-label/boot  /mnt/boot
+mount /dev/disk/by-label/boot /mnt/boot
 swapon /dev/sda3
 
 
 ## Configuration
-##nixos-generate-config --root /mnt
-#cd
-#git clone https://github.com/theshteves/dotfiles.git
-#cd dotfiles
+#nixos-generate-config --root /mnt
 mkdir -p /mnt/etc/nixos
-cp ./nixos.config/nixos/* /mnt/etc/nixos
-nixos-install
+cp ./nixos/* /mnt/etc/nixos
+nixos-install # --flake "github:theshteves/dotfiles#vbox"
 
-
+cp -r ~/dotfiles /mnt/home/bruh/dotfiles
+# nix flake clone .#vbox" --dest /mnt/home/bruh/.config
+# nix flake clone "github:theshteves/dotfiles#vbox" --dest /mnt/home/bruh/.config
+#ln -sfn /mnt/home/bruh/dotfiles/nixos.config ~/.config  #TODO: careful of pre-existing .config
 #reboot
