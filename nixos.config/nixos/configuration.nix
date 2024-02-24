@@ -1,6 +1,3 @@
-# configuration.nix(5) man page
-# https://search.nixos.org/options
-# in the NixOS manual ('nixos-help')
 { config, inputs, lib, pkgs, ... }:
 {
   imports = [
@@ -28,7 +25,7 @@
   time.timeZone = "US/Eastern";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  networking.hostName = "hostbruh";
+  networking.hostName = "vbox";
   networking.networkmanager.enable = true;
   networking.firewall.enable = false;
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -63,12 +60,11 @@
         lightdm = {
           enable = true;
           #greeter.enable = true;
-          background = "/home/bruh/dotfiles/nixos.config/home-manager/wallpaper-nixos-1920x1080.jpg"; #"#222222";
+          background = lib.mkForce "/home/bruh/dotfiles/nixos.config/home-manager/wallpaper-nixos-1920x1080.jpg"; #"#222222";
         };
-        sessionCommands = ''
-          ${pkgs.xorg.xrdb}/bin/xrdb -merge ~/.Xdefaults
-        '';
-        #setupCommands = {};
+        #sessionCommands = ''
+        #  ${pkgs.xorg.xrdb}/bin/xrdb -merge ~/.Xdefaults
+        #'';
       };
       windowManager = { #TODO: try hyprland + catppuccin someday
         i3 = {

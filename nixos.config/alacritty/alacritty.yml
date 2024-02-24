@@ -1,0 +1,10 @@
+window:
+  decorations: "None"
+
+font:
+  size: 14.0
+
+shell:
+  program: bash
+  args:
+    - --login
