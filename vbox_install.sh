@@ -44,7 +44,8 @@ cp ./nixos/* /mnt/etc/nixos
 nixos-install # --flake "github:theshteves/dotfiles#vbox"
 
 cp -r ~/dotfiles /mnt/home/bruh/dotfiles
+mkdir -p /mnt/home/bruh/.config
+ln -sfn /mnt/home/bruh/dotfiles/nixos.config/* /mnt/home/bruh/.config  #TODO: careful of pre-existing .config
 #reboot
 
-### ln -sfn /mnt/home/bruh/dotfiles/nixos.config ~/.config  #TODO: careful of pre-existing .config
 #home-manager switch --flake ~/dotfiles/nixos.config#vbox
