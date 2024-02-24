@@ -5,7 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    dotfiles.url = "github:theshteves/dotfiles";
+    #dotfiles.url = "github:theshteves/dotfiles";
     # hardware.url = "github:nixos/nixos-hardware";
     # nix-colors.url = "github:misterio77/nix-colors";
   };
@@ -21,11 +21,10 @@
     # Standalone home-manager configuration entrypoint
     # Available through `home-manager switch --flake .#bruh@vbox`
     homeConfigurations = {
-      "bruh" = home-manager.lib.homeManagerConfiguration {
-      #"bruh@vbox" = home-manager.lib.homeManagerConfiguration {
+      "vbox" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux;  # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
-        modules = [./home-manager/home.nix];
+        modules = [ ./home-manager/home.nix ];
       };
     };
 

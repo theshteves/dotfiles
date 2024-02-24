@@ -32,10 +32,10 @@
     # Make '~/.screenrc' a symlink to the Nix store copy
     # ".screenrc".source = dotfiles/screenrc;
 
-    ".bash_profile".source = ${dotfiles}/.bash_profile;
-    #".bash_profile".source = lib.mkForce /home/bruh/dotfiles/.bash_profile;
-    #".bashrc".source = lib.mkForce /home/bruh/dotfiles/.bashrc;
-    #".vimrc".source = lib.mkForce /home/bruh/dotfiles/.vimrc;
+    #".bash_profile".source = ${dotfiles}/.bash_profile;
+    ".bash_profile".source = lib.mkForce ../../.bash_profile;
+    ".bashrc".source = lib.mkForce ../../.bashrc;
+    ".vimrc".source = lib.mkForce  ../../.vimrc;
 
     # # You can also set the file content immediately.
     # ".gradle/gradle.properties".text = ''
