@@ -52,13 +52,15 @@ alias dcupf="docker compose up -d && docker compose --follow logs"
 alias dcdown="docker compose down"
 #alias docker-compose="docker compose"
 alias e="emacs -nw"
+alias j="jupyter notebook"
 alias k="kubectl"
 alias kg="kubectl get"
 alias kga="kubectl get ns | awk '{print \$1}' | tail -n +2 | xargs -I % sh -c 'echo \"==> \\033[31;1;4m%\\033[0m\"; kubectl get -n % all; echo \"\\n\"'"
 function l { $(history -p !!) | less --LINE-NUMBERS --LONG-PROMPT --CLEAR-SCREEN --squeeze-blank-lines --ignore-case --hilite-search --RAW-CONTROL-CHARS --SILENT --HILITE-UNREAD; }
 #TODO: function l should capture the previous command's stdout into `less`, or at very least re-execute it (even though that would be problematic with stateful commands)
 alias m="man"
-alias mr="make run"
+alias ma="make -j 7"
+#alias t is taken for 'temp' below
 alias v="vim"
 alias vd="vimdiff"
 function z { %${1}; } # job control: ctrl-z & z
@@ -116,8 +118,8 @@ alias sz="jobs"
 #
 ###############################################{{{
 alias fb="du -ht 1G \. 2>/dev/null | sort -hr"
-function ff { find \. -type f -maxdepth ${2-5} -name "${1}" 2> /dev/null; }
-function fd { find \. -type d -maxdepth ${2-5} -name "${1}" 2> /dev/null; }
+function ff { find \. -type f -maxdepth ${2-5} -name "${1}" "${@:3}" 2> /dev/null; }
+function fd { find \. -type d -maxdepth ${2-5} -name "${1}" "${@:3}" 2> /dev/null; }
 
 case "$OSTYPE" in
   darwin*)
@@ -182,7 +184,7 @@ alias gds="git diff --word-diff --staged"
 alias gf="git fetch"
 alias gfa="git fetch -a"
 alias gg="git grep"
-alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue%an %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cblue%an %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --remotes=origin HEAD"
 alias gp="git push"
 alias gpr="git pull --rebase"
 alias grs="git restore --staged"
@@ -218,7 +220,6 @@ function gimme {
       brew update
       brew upgrade
       brew cleanup #--prune-prefix #brew prune
-      #brew cleanup
       brew doctor
       ;;
     linux*)
@@ -265,3 +266,45 @@ function python4 {
     ./python.exe
     cd -
 }
+
+
+alias b="btm --battery --fahrenheit --enable_gpu_memory --enable_cache_memory --current_usage  --unnormalized_cpu --left_legend --network_use_log --rate=250"
+alias psst="netstat -p tcp -van | grep '^Proto\|LISTEN' | awk '{print \$9}' | tail -n +2 | sort | xargs ps -p"
+alias sniff="dumpcap -i 1 -w ~/data/pcapng/sniff.pcapng -b filesize:500000 -b files:10"
+
+
+case "$OSTYPE" in
+  linux*)
+    alias t=""
+    echo
+    ;;
+  darwin*)
+    alias t="sudo powermetrics | grep 'temp'"
+    alias netins="networksetup -listallhardwareports"
+    alias net_ins="ifconfig | grep -e '^[a-z]' | awk '{print substr(\$1, 1, length(\$1) - 1)}' | sort"
+    alias wifi_analyzer="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -s | tail -n +2 | awk '{print \$1,\$2,\$3,\$4}' | sort -k 2"
+    echo
+    ;;
+  *)
+    echo
+    ;;
+esac
+
+
+alias llama="~/code/llama.cpp/main -m ~/code/llama.cpp/models/llama-2-13b-chat.ggmlv3.q4_0.bin \
+  --color \
+  --ctx_size 2048 \
+  -n -1 \
+  -ins -b 256 \
+  --top_k 10000 \
+  --temp 0.2 \
+  --repeat_penalty 1.1 \
+  -t 8"
+
+
+alias wolfram="ffplay -f lavfi -i cellauto=rule=110"
+alias wolfram2="ffplay -f lavfi -i life=s=300x200:mold=10:r=60:ratio=0.1:death_color=#C83232:life_color=#00ff00,scale=1200:800:flags=16"
+alias wolfram3="ffplay -f lavfi -i mandelbrot"
+
+
+alias forecast="~/code/misc/weather.sh"
