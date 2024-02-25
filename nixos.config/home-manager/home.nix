@@ -7,7 +7,7 @@
   #TODO: delegate some NixOS configuration.nix to this flake
   home.packages = with pkgs; [
     bashInteractive
-    #firefox
+    #firefox #TODO: install uBlock Origin
     #btop
     #parted
     #neofetch
@@ -54,6 +54,7 @@
   #
   home.sessionVariables = {
     EDITOR = "vim";
+    BROWSER = "firefox";
     TERMINAL = "alacritty";
     #NIX_SHELL_PRESERVE_PROMPT = 1; # https://unix.stackexchange.com/a/691405 + https://bleepcoder.com/alacritty/293206538/default-shell-on-macos-should-use-login
   };
