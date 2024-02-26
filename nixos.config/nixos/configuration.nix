@@ -40,22 +40,21 @@
   # };
 
   services = {
+
     xserver = {
       enable = true;
-      #autorun = false;
       xkb.layout = "us";
-      virtualScreen = {
-        x = 1920;
-        y = 1080;
-      };
-      videoDrivers = lib.mkOverride 10 [ "vmware" ];
       #xkb.options = "eurosign:e,caps:escape";
+      #virtualScreen = {
+      #  x = 1920;
+      #  y = 1080;
+      #};
+      videoDrivers = lib.mkOverride 10 [ "vmware" ];
       displayManager = {
         autoLogin = {
           enable = true;
           user = "bruh";
         };
-        #sddm.enable = true;
         defaultSession = "none+i3"; # xfce+i3 is best of both worlds
         lightdm = {
           enable = true;
@@ -76,9 +75,6 @@
             i3blocks
           ];
         };
-        #bspwm = {
-        #  enable = true;
-        #};
       };
       desktopManager = {
         #xfce.enable = true;
@@ -87,24 +83,15 @@
       };
       libinput.enable = true; # enable touchpad support
     };
+
     #printing.enable = true;
-    picom = {
+    openssh = {
       enable = true;
-      shadow = true;
-      inactiveOpacity = 0.6;
-      activeOpacity = 0.92;
-      menuOpacity = 0.84;
-      fadeDelta = 4;
-      fade = true;
-    };
-  };
-  # services.printing.enable = true;
-  services.openssh = {
-    enable = true;
-    settings = {
-      # Forbid root login through SSH.
-      PermitRootLogin = "no";
-      PasswordAuthentication = true;  #TODO: disable
+      settings = {
+        # Forbid root login through SSH.
+        PermitRootLogin = "no";
+        PasswordAuthentication = true;  #TODO: disable
+      };
     };
   };
 
@@ -143,6 +130,7 @@
     bashInteractive
     vim
     git
+    parted
     #mumble
     #bspwm
     #sxhkd
@@ -154,9 +142,10 @@
     #kitty
     #keepassxc
     alacritty
-    polybar
-    picom
+    #polybar
+    #picom
     home-manager
+    firefox  #TODO: uBlock origin
   ];
 
   environment.sessionVariables = {
@@ -173,14 +162,6 @@
         isNormalUser = true;
         password = "bruh";  #TODO: Reset w/ 'passwd'
         extraGroups = [ "wheel" "networkmanager" ]; # "wheel" enables 'sudo' # audio, docker, etc
-        packages = with pkgs; [
-          firefox  #TODO: uBlock origin
-          btop
-          parted
-          neofetch
-          duf
-          #roboto-mono
-        ];
       };
     };
   };
