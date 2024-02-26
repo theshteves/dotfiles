@@ -31,11 +31,12 @@ TEMP_MULTILINE_STRING
 )
 case "$OSTYPE" in
   darwin*)
-printf "$WELCOME_MSG \n $(fortune -s | cowsay -f dragon) \n" | lolcat -a -d 1 &
-;;
+    printf "$WELCOME_MSG \n" | lolcat -a -d 1 &
+    #printf "$WELCOME_MSG \n $(fortune -s | cowsay -f dragon) \n" | lolcat -a -d 1 &
+    ;;
   *)
-echo "$WELCOME_MSG" &
-;;
+    echo "$WELCOME_MSG \n" &
+    ;;
 esac
 # The "&" forks off into a new process. The forced 1-second delay covers up the setup execution below more seamlessly
 
