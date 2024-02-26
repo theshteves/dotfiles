@@ -79,12 +79,27 @@
   services = {
     picom = {
       enable = true;
-      #shadow = true;
-      #inactiveOpacity = 0.6;
-      #activeOpacity = 0.92;
+      shadow = true;
+      #backend = "glx";
+      inactiveOpacity = 0.6;
+      activeOpacity = 0.92;
       #menuOpacity = 0.84;
-      #fadeDelta = 4;
-      #fade = true;
+      fadeDelta = 4;
+      fade = true;
+      settings = {
+        #blur = {
+        #  method = "gaussian";
+        #  size = 5;
+        #  deviation = 2.0;
+        #};
+        corner-radius = 15;
+        round-borders = 1;
+      };
+      opacityRules = [
+        "100:fullscreen"
+        "100:class_g = 'firefox'"
+        "85:class_g = 'i3bar'"
+      ];
     };
   };
 }
