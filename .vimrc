@@ -229,3 +229,4 @@ let @c="yt=f=a=0"
 "q - surround word in quotes
 let @q="viwa\"hbi\"lel"
 
+set tags=~/code/pico/pico-sdk/tags

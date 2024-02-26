@@ -314,3 +314,7 @@ alias hor="home-manager switch --flake ~/dotfiles/nixos.config#vbox"
 alias nor="sudo cp ~/dotfiles/nixos.config/nixos/* /etc/nixos/; sudo nixos-rebuild switch"
 alias eh="vim ~/dotfiles/nixos.config/home-manager/home.nix"
 alias en="vim ~/dotfiles/nixos.config/nixos/configuration.nix"
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/stevenkneiser/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
