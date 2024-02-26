@@ -191,4 +191,4 @@ bar {
         font pango:DejaVuSansMono 14
 }
 exec_always xrandr --output Virtual1 --mode 1920x1080
-exec_always feh --bg-scale ~/dotfiles/nixos.config/home-manager/wallpaper-nixos-1920x1080.jpg
+exec_always feh --bg-fill ~/.config/wallpapers/seoul.jpg

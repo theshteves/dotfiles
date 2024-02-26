@@ -91,9 +91,10 @@
     picom = {
       enable = true;
       shadow = true;
-      inactiveOpacity = 0.5;
-      activeOpacity = 0.8;
-      fadeDelta = 10; #4;
+      inactiveOpacity = 0.6;
+      activeOpacity = 0.92;
+      menuOpacity = 0.84;
+      fadeDelta = 4;
       fade = true;
     };
   };
